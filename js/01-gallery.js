@@ -1,26 +1,18 @@
 import { galleryItems } from './gallery-items.js';
 // Change code below this line
-
 // console.log(galleryItems);
 
-const gallary = document.querySelector('.gallery')
+const gallaryImges = document.querySelector('.gallery');
+const markupGallary = createMarkupImges(galleryItems);
+gallaryImges.insertAdjacentHTML('beforeend', markupGallary)
+gallaryImges.addEventListener('click', onModalOpen)
 
 
-// function createMarkup(items) {
-//     return 
-//     items.map(item => 
-//         `<a class="gallery__link" href="${galleryItem.original}" target="_blank" rel="noopener noreferrer nofollow">
-//         <img class="gallery__image" src="${galleryItem.preview}" data-source="${galleryItem.original}" alt="${galleryItem.description}"/></a>`).join('')
-        
-//         gallary.insertAdjacentHTML('beforeend', markup)
-// }
-const markup = galleryItems.map(galleryItem => 
-`<a class="gallery__link" href="${galleryItem.original}" target="_blank" rel="noopener noreferrer nofollow">
-<img class="gallery__image" src="${galleryItem.preview}" data-source="${galleryItem.original}" alt="${galleryItem.description}"/></a>`).join('')
-
-gallary.insertAdjacentHTML('beforeend', markup)
-
-gallary.addEventListener('click', onModalOpen)
+function createMarkupImges(items){
+    return items.map(item => 
+        `<a class="gallery__link" href="${item.original}" target="_blank" rel="noopener noreferrer nofollow">
+        <img class="gallery__image" src="${item.preview}" data-source="${item.original}" alt="${item.description}"/></a>`).join('')
+}
 
 function onModalOpen(evt) {
     evt.preventDefault()
@@ -29,15 +21,19 @@ function onModalOpen(evt) {
     } 
     // console.log(evt.target.currentSrc);
     // console.log(evt.target.dataset.source);
-
+    
     const instance = basicLightbox.create(`
     <img src="${evt.target.currentSrc}">
-    `, {onShow: instance => {
+    `, {
+        className: 'basicLightbox__background',
+        onShow: instance => {
         document.addEventListener('keydown', onModalClose);
-      },
-      onClose: instance => {
+        },
+        onClose: instance => {
         document.removeEventListener('keydown', onModalClose);
-      }})   
+        }
+       }
+    )   
 
     instance.show()
     
@@ -45,5 +41,5 @@ function onModalOpen(evt) {
         if (evt.code === "Escape") {
             instance.close();
         }
-}
+    }
 }
