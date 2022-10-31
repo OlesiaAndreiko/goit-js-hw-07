@@ -7,11 +7,10 @@ const markupGallary = createMarkupImges(galleryItems);
 gallaryImges.insertAdjacentHTML('beforeend', markupGallary)
 gallaryImges.addEventListener('click', onModalOpen)
 
-
 function createMarkupImges(items){
-    return items.map(item => 
-        `<a class="gallery__link" href="${item.original}" target="_blank" rel="noopener noreferrer nofollow">
-        <img class="gallery__image" src="${item.preview}" data-source="${item.original}" alt="${item.description}"/></a>`).join('')
+    return items.map(({original, preview, description}) => 
+        `<a class="gallery__link" href="${original}" target="_blank" rel="noopener noreferrer nofollow">
+        <img class="gallery__image" src="${preview}" data-source="${original}" alt="${description}"/></a>`).join('')
 }
 
 function onModalOpen(evt) {
@@ -21,10 +20,11 @@ function onModalOpen(evt) {
     } 
     // console.log(evt.target.currentSrc);
     // console.log(evt.target.dataset.source);
-    
+        
     const instance = basicLightbox.create(`
     <img src="${evt.target.currentSrc}">
     `, {
+        closable: false,
         className: 'basicLightbox__background',
         onShow: instance => {
         document.addEventListener('keydown', onModalClose);

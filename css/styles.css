@@ -43,5 +43,10 @@
   cursor: zoom-in;
 }
 
-.basicLightbox__background{
+.basicLightbox__background {
   background-color: rgba(255, 255, 128, 0.796)}
+
+.sl-capt {
+  text-align: center;
+  font-weight: 600;
+}
